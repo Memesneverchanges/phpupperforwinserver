@@ -19,8 +19,9 @@ try
         //{ }
         Console.WriteLine(@"cd " + Directory.GetCurrentDirectory() + " & start.bat");
         Process myProcess = new Process();
-        myProcess.StartInfo.FileName = "cmd.exe";
-        myProcess.StartInfo.Arguments = @"cd " + Directory.GetCurrentDirectory() + "& start.bat";
+        myProcess.StartInfo.FileName = "start.bat";
+        myProcess.StartInfo.WorkingDirectory = Directory.GetCurrentDirectory();
+        //myProcess.StartInfo.Arguments = @"cd " + Directory.GetCurrentDirectory() + "& start start.bat";
         myProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
         myProcess.StartInfo.CreateNoWindow = true;
         myProcess.Start();
