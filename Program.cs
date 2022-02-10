@@ -1,7 +1,5 @@
 ﻿using System.Diagnostics;
 
-try
-{
     //new Thread(() =>
     //{
     //    while (true)
@@ -13,25 +11,24 @@ try
 
     //}).Start();
 
-    new Thread(() =>
+    Thread proc = new Thread(() =>
     {
-        //while (true)
-        //{ }
+        int t = 0;
         Console.WriteLine(@"cd " + Directory.GetCurrentDirectory() + " & start.bat");
         Process myProcess = new Process();
-        myProcess.StartInfo.FileName = "start.bat";
+        myProcess.StartInfo.FileName = "cmd.exe";
         myProcess.StartInfo.WorkingDirectory = Directory.GetCurrentDirectory();
-        //myProcess.StartInfo.Arguments = @"cd " + Directory.GetCurrentDirectory() + "& start start.bat";
+        myProcess.StartInfo.Arguments = "/c" + "cd " + Directory.GetCurrentDirectory() + "& start.bat";
         myProcess.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+        myProcess.StartInfo.UseShellExecute = false;
         myProcess.StartInfo.CreateNoWindow = true;
-        myProcess.Start();
-
-
-    }).Start();
-
-
-}
-catch (Exception ex)
-{
-    System.Console.WriteLine(ex.ToString());
-}
+        while (t < 100)
+        {
+            myProcess.Start();
+            myProcess.WaitForExit();
+            t++;
+            Console.WriteLine(t.ToString());
+        }
+        return;
+    });
+    proc.Start();
